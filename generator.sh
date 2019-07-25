@@ -72,9 +72,6 @@ add generate-policy=port-override notrack-chain=prerouting peer=peer1-aws-ISP1 p
 
 /ip ipsec policy
 set 0 disabled=yes
-add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN1} tunnel=yes comment="ISP1_vpn1. ipsec_aws" 
-add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN2} tunnel=yes comment="ISP1_vpn1. ipsec_aws" 
-add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN3} tunnel=yes comment="ISP1_vpn1. ipsec_aws"
 add dst-address=${AWS_INT_Virtual_GW_IP}/32 peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_INT_IP_To_Connect_To_Virtual_GW}/32 tunnel=yes comment="ISP1_vpn2. ipsec_aws" 
 
 
