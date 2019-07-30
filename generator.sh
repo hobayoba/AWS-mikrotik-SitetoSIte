@@ -8,9 +8,7 @@ ASN=65000
 YOUR_SECRET=
 
 AWS_LAN=x.x.x.x/x
-YOUR_LAN1=10.x.x.x/24
-YOUR_LAN2=10.x.y.x/24
-YOUR_LAN3=10.x.z.x/24
+YOUR_LAN1=10.x.x.x/16
 
 AWS_EXT_IP_ADDR=y.y.y.y
 YOUR_EXT_IP_ADDR=z.z.z.z
@@ -46,10 +44,6 @@ add list=AWS_Sends address=${AWS_LAN} \
 # create list with local lans
 add list=AWS_Gets address=${YOUR_LAN1} \
     comment="Our Net to announce with BGP to AWS VPC. ipsec_aws"
-add list=AWS_Get address=${YOUR_LAN2} \
-    comment="Our Net to announce with BGP to AWS VPC. ipsec_aws"
-add list=AWS_Gets address=${YOUR_LAN3} \
-    comment="Our Net to announce with BGP to AWS VPC. ipsec_aws"
 
 
 
@@ -74,8 +68,6 @@ add generate-policy=port-override notrack-chain=prerouting peer=peer1-aws-ISP1 p
 set 0 disabled=yes
 add dst-address=${AWS_INT_Virtual_GW_IP}/32 peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_INT_IP_To_Connect_To_Virtual_GW}/32 tunnel=yes comment="ISP1_vpn2. ipsec_aws" 
 add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN1} tunnel=yes comment="ISP1_vpn1. ipsec_aws" 	
-add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN2} tunnel=yes comment="ISP1_vpn1. ipsec_aws" 	
-add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1 sa-dst-address=${AWS_EXT_IP_ADDR} sa-src-address=${YOUR_EXT_IP_ADDR} src-address=${YOUR_LAN3} tunnel=yes comment="ISP1_vpn1. ipsec_aws"
 
 # set BGP
 /routing bgp instance
@@ -84,8 +76,6 @@ add as=${ASN} name=bgp1-aws-vpn1-ISP1 router-id=${YOUR_INT_IP_To_Connect_To_Virt
 
 /routing bgp network
 add network=${YOUR_LAN1} comment="announce to AWS VPC. ipsec_aws"
-add network=${YOUR_LAN2} comment="announce to AWS VPC. ipsec_aws"
-add network=${YOUR_LAN3} comment="announce to AWS VPC. ipsec_aws"
 
 /routing bgp peer
 add hold-time=30s instance=bgp1-aws-vpn1-ISP1 keepalive-time=10s name=AWS-peer1-ISP1 remote-address=${AWS_INT_Virtual_GW_IP} ttl=default update-source=bridge1-aws-ISP1_vpn1 comment="AWS Internal IP of Virtual GW. ipsec_aws"
