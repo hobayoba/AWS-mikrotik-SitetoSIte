@@ -77,7 +77,7 @@ set [find default=yes] as=${ASN} name=default router-id=${YOUR_INT_IP_To_Connect
 add network=${YOUR_LAN1} comment="announce to AWS VPC. ipsec_aws"
 
 /routing bgp peer
-add hold-time=30s instance=bgp1-aws-vpn1-ISP1 keepalive-time=10s name=AWS-peer1-ISP1 remote-address=${AWS_INT_Virtual_GW_IP} ttl=default update-source=bridge1-aws-ISP1_vpn1 comment="AWS Internal IP of Virtual GW. ipsec_aws"
+add hold-time=30s instance=default keepalive-time=10s name=AWS-peer1-ISP1 remote-address=${AWS_INT_Virtual_GW_IP} ttl=default update-source=bridge1-aws-ISP1_vpn1 comment="AWS Internal IP of Virtual GW. ipsec_aws"
 
 
 
