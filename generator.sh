@@ -72,8 +72,9 @@ add dst-address=${AWS_LAN} peer=peer1-aws-ISP1 proposal=aws-ipsec-vpn-via-ISP1_1
 # set BGP
 /routing bgp instance
 set [find default=yes] disabled=yes
-add as=${ASN} name=bgp1-aws-vpn1-ISP1 router-id=${YOUR_INT_IP_To_Connect_To_Virtual_GW} disabled=yes comment="local BGP (Int. Customer gw IP). ipsec_aws"
+add as=${ASN} name=bgp1-aws-vpn1-ISP1 router-id=${YOUR_INT_IP_To_Connect_To_Virtual_GW} disabled=no comment="local BGP (Int. Customer gw IP). ipsec_aws"
 
+#aws not working with /16 net, so need to set /24 networks manually
 /routing bgp network
 add network=${YOUR_LAN1} comment="announce to AWS VPC. ipsec_aws"
 
